@@ -1,14 +1,16 @@
 # Rebased Protocol
 
-Enabling cross-chain rebasing for staked tokens, beginning with stETH.
+Rebased Protocol enables rebasing tokens, such as stETH, to function seamlessly across chains while retaining rebase events. The system leverages multiple innovative technologies to ensure accurate, real-time rebase synchronization across different blockchain networks.
 
-This repository implements several approaches to enable rebasing tokens across different chains.
+## Overview
+
+This project allows rebasing tokens to maintain their rebasing mechanics when bridged across chains. Scroll's L1SLOAD precompile provides quick and cost-effective access to L1 blockchain and contract states, enabling immediate and accurate rebase updates. EIP-4788 ensures Lido Oracle reports are consistent with specific block roots, protecting data integrity through block root verification, epoch validation, and ordered report processing. LayerZero's lzRead enables reliable cross-chain communication, ensuring compatibility and accurate data flow.
 
 ## Architecture Overview
 
 ### Rebased (LayerZero Read)
 
-Leverages LayerZero's `lzRead` functionality to retrieve balance updates from mainnet stETH. While the codebase is fully implemented, deployment encountered challenges with DVN and executor configurations for cross-chain `lzRead` operations.
+Leverages LayerZero's `lzRead` functionality for reliable cross-chain communication, ensuring compatibility and accurate data flow. The system retrieves balance updates from mainnet stETH using lzRead's dependable cross-chain messaging. While the codebase is fully implemented, deployment encountered challenges with DVN and executor configurations for cross-chain `lzRead` operations.
 
 **Deployment:**
 - `Rebased`: `0x8eE74Bfc34e7e2e257887d54a59DAD1b2BD80Cc3` (Base Sepolia - currently inactive)
@@ -26,7 +28,7 @@ An OFT-based approach for cross-chain rebasing:
 
 ### Scroll Implementation
 
-Utilizes Scroll's native `L1SLOAD` precompile to access L1 state in real-time, providing immediate stETH balance synchronization without relying on external oracles.
+Utilizes Scroll's native `L1SLOAD` precompile to access L1 state in real-time, providing immediate stETH balance synchronization without relying on external oracles. The L1SLOAD precompile enables quick and cost-effective access to L1 blockchain and contract states, allowing for instant rebase updates directly from the source chain.
 
 **Deployments:**
 - `ScrollBridge`: `0x2b819A18d532456F273d59Ed4788d97b52fa6375` (Ethereum Sepolia)
@@ -40,7 +42,7 @@ src/
 ├── IRebased.sol          # Interface
 ├── RebasedOFT.sol        # OFT token
 ├── StakedEthAdapter.sol  # Mainnet adapter
-├── YieldVerifier.sol     # EIP-4788 verifier
+├── YieldVerifier.sol     # EIP-4788 verifier for Lido Oracle report validation
 ├── external/
 │   └── IStETH.sol        # stETH interface
 ├── mocks/
@@ -50,6 +52,14 @@ src/
     ├── ScrollRebased.sol # L2 token
     └── ScrollBridge.sol  # L1 bridge
 ```
+
+## Key Features
+
+- **Cross-Chain Rebasing**: Maintains rebase events when tokens are bridged across chains
+- **Real-Time Updates**: Uses Scroll's L1SLOAD for instant L1 state access without oracle delays
+- **Data Integrity**: EIP-4788 verification ensures Lido Oracle reports match block roots
+- **Reliable Communication**: LayerZero's lzRead provides dependable cross-chain data flow
+- **Multiple Approaches**: Implements various strategies for different chain architectures
 
 ## Getting Started
 

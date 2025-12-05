@@ -78,7 +78,7 @@ contract RebasedOFT is OFT {
         uint32 dstEid
     ) internal virtual override returns (uint256 amountSentLD, uint256 amountReceivedLD) {
         uint256 shares = convertEthToShares(amountLD);
-        userShares[msg.sender] -= shares;
+        userShares[from] -= shares;
         return super._debit(from, amountLD, minAmountLD, dstEid);
     }
 
@@ -88,7 +88,7 @@ contract RebasedOFT is OFT {
         uint32 srcEid
     ) internal virtual override returns (uint256 amountReceivedLD) {
         uint256 shares = convertEthToShares(amountLD);
-        userShares[msg.sender] += shares;
+        userShares[to] += shares;
         return super._credit(to, amountLD, srcEid);
     }
 }
